@@ -1,0 +1,65 @@
+<%- include ("partials/header") %>
+
+    <div class="container" style="margin-top:75px; width: 100%;">
+        <% if(mode == 'edit') { %>
+            <h3>Edit List</h3>
+            <% } else { %>
+                <h3>Add New K-Drama</h3>
+                <% } %>
+                    <form class="add-player-form" <% if(mode=='edit' ) { %> action="/update/
+                        <%= editUser.id %>"
+                            <% } else {  %> action="/save"
+                                <% } %>
+                                    method="post" enctype="multipart/form-data">
+                                    <div class="row" style="width: 300%;">
+                                        <div class="col-md-4 bg-dark text-white">
+                                            <div class="form-group">
+                                                <label>Title: </label>
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Add Title" required="required" value="<% if(mode == 'edit') { %><%= editUser.name %><% } %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Author: </label>
+                                                <input type="text" name="email" id="email" class="form-control" placeholder="Add Author" required="required" value="<% if(mode == 'edit') {     %><%= editUser.email %><% } %>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Genre: </label>
+                                                <input type="text" name="genre" id="genre" class="form-control" placeholder="Add Genre" required="required" value="<% if(mode == 'edit') {     %><%= editUser.genre %><% } %>">
+                                            </div>
+
+                                            <% if(mode == 'add' && mode != 'edit') { %>
+                                                <div class="form-group">
+                                                    <label>Rating: </label>
+                                                    <input type="text" name="age" id="age" class="form-control" placeholder="Add Rate" value="">
+                                                </div>
+                                                <% } %>
+
+                                                    <% if(mode == 'edit') { %>
+                                                        <div class="form-group">
+                                                            <label>Rating: </label>
+                                                            <input type="text" name="age" id="age" class="form-control" placeholder="rate" value="<%= editUser.age %>">
+                                                        </div>
+                                                        <% } %>
+                                                            <div class="form-group">
+                                                                <label>Upload Image: </label>
+                                                                <input type="file" name="profile_image" id="profile_image" accept="image/*" onchange="loadFile(event)">
+                                                            </div>
+                                                            <% if(mode == 'edit' && editUser.image != '') { %>
+                                                                <div class="form-group">
+                                                                    <img src="/uploads/images/<%= editUser.image %>" style="width:100px; height:120px; border-radius:10px;">
+                                                                    <input type="hidden" name="current_profile_image" value="<%= editUser.image %>">
+                                                                </div>
+                                                                <% } %>
+                                                                    <div class="form-group">
+                                                                        <% if(mode == 'edit' && editUser.image != '') { %>
+                                                                            <a href="/delete-user-image/<%= editUser.id %>" class="btn btn-danger" onclick="return confirm('Are you want to remove this image ?');">Delete Image</a>
+                                                                            <% } %>
+                                                                        <input type="submit" class="btn btn-success" <% if(mode=='edit' ) { %> value="Save Changes"
+                                                                        <% } else { %> value="Add New K-Drama"
+                                                                            <% } %>>
+                                                                                
+                                                                    </div>
+                                        </div>
+                                    </div>
+                    </form>
+    </div>
+    <%- include ("partials/footer") %>
